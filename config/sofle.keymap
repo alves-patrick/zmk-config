@@ -31,6 +31,17 @@
         };
     };
 
+/ {
+    behaviors {
+        idle_rgb_off: idle_rgb_off {
+            compatible = "zmk,behavior-idle";
+            label = "Idle RGB Off";
+            idle-wakeup-behavior = <&rgb_ug RGB_TOG>;
+            idle-sleep-behavior = <&rgb_ug RGB_TOG>;
+        };
+    };
+};
+
     keymap {
         compatible = "zmk,keymap";
 
