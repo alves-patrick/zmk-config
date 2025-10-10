@@ -1,0 +1,17 @@
+/ {
+    chosen {
+        zephyr,display = &oled;
+    };
+};
+
+&oled {
+    compatible = "solomon,ssd1306fb";
+    width = <128>;
+    height = <32>;
+    segment-offset = <0>;
+    page-offset = <0>;
+    display-offset = <32>;  /* move o conteúdo pra dentro da área visível */
+    flip = <0>;
+    invert = <0>;
+    rotation = <180>;       /* se o texto sair de cabeça pra baixo, troque pra 0 */
+};
