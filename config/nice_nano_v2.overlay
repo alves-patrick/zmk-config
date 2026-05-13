@@ -9,11 +9,9 @@
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
         reg = <0x74>;
-        /* Usando o pino 1.02 conforme sua montagem */
+        /* Pino 1.02 conforme sua solda atual */
         rdy-gpios = <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
         status = "okay";
-        /* Removidas as linhas tap-enable e scroll-enable que causavam erro */
-        azoteq,sensitivity = <120>;
     };
 };
 
