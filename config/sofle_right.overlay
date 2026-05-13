@@ -1,16 +1,13 @@
 &i2c0 {
     status = "okay";
-    compatible = "nordic,nrf-twim";
-    /* Endereço padrão Azoteq é 0x44, se não funcionar tente 0x2a */
+    clock-frequency = <100000>; // Tente uma velocidade menor de I2C
+
     trackpad: tps43@44 {
         compatible = "azoteq,tps43";
         reg = <0x44>;
-        /* Pino 107 é o P1.07 */
         irq-gpios = <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         resolution = <800>;
+        /* Adicione estas linhas para forçar a detecção */
+        status = "okay";
     };
-};
-
-&oled {
-    status = "disabled";
 };
