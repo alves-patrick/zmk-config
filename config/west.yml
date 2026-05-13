@@ -1,16 +1,16 @@
 manifest:
   remotes:
     - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
-    - name: urob
-      url-base: https://github.com/urob
+      url: https://github.com/zmkfirmware/zmk
+    - name: petejohanson
+      url: https://github.com/petejohanson/zmk-pointing-devices
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: zmk-node-free-config
-      remote: urob
+    - name: zmk-pointing-devices
+      remote: petejohanson
       revision: main
   self:
     path: config
