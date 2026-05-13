@@ -1,13 +1,17 @@
 &i2c0 {
     status = "okay";
-    clock-frequency = <100000>; // Tente uma velocidade menor de I2C
-
-    trackpad: tps43@44 {
+    /* Endereço TPS43 conforme sua imagem */
+    tps43: tps43@44 {
         compatible = "azoteq,tps43";
         reg = <0x44>;
+        /* 107 é o P1.07 */
         irq-gpios = <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         resolution = <800>;
-        /* Adicione estas linhas para forçar a detecção */
         status = "okay";
     };
+};
+
+/* Desativa o OLED para liberar o barramento para o Trackpad */
+&oled {
+    status = "disabled";
 };
