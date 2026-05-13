@@ -1,17 +1,15 @@
 &i2c0 {
     status = "okay";
-    /* Endereço TPS43 conforme sua imagem */
-    tps43: tps43@44 {
-        compatible = "azoteq,tps43";
+    /* Se 0x44 não funcionar, tente o endereço 0x74 usado em algumas revisões */
+    tps43: iqs5xx@44 {
+        compatible = "azoteq,iqs5xx";
         reg = <0x44>;
-        /* 107 é o P1.07 */
+        /* Pino 107 = Porto 1, Pino 7 */
         irq-gpios = <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         resolution = <800>;
-        status = "okay";
     };
 };
 
-/* Desativa o OLED para liberar o barramento para o Trackpad */
 &oled {
     status = "disabled";
 };
