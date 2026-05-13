@@ -1,11 +1,13 @@
 &i2c0 {
     status = "okay";
+    clock-frequency = <400000>; // Força a velocidade do barramento
 
-    /* Removemos o nó do OLED e colocamos o Trackpad */
     trackpad: tps43@44 {
         compatible = "azoteq,tps43";
         reg = <0x44>;
+        /* Pino 107 = Porto 1, Pino 7 */
         irq-gpios = <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         resolution = <800>;
+        status = "okay";
     };
 };
