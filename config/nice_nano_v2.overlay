@@ -1,4 +1,9 @@
-#include <dt-bindings/zmk/input_transform.h>
+/ {
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
 
 &i2c0 {
     status = "okay";
@@ -6,18 +11,21 @@
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
 
-    tps43: iqs5xx@44 {
+    tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
-        reg = <0x44>;
-        /* Pino 1.02 conforme sua solda atual */
-        rdy-gpios = <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        reg = <0x74>;
         status = "okay";
-    };
-};
 
-/ {
-    tps43_input: tps43_input {
-        compatible = "zmk,input-listener";
-        device = <&tps43>;
+        /* Como você soldou o RST no 3V3, não defina reset-gpios aqui */
+        
+        /* Seu pino RDY soldado no pad interno 1.02 */
+        rdy-gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
+
+        /* Opções de configuração conforme o README do repo */
+        one-finger-tap;
+        two-finger-tap;
+        scroll;
+        press-and-hold;
+        press-and-hold-time = <250>;
     };
 };
