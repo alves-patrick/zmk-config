@@ -2,15 +2,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: petejohanson
-      url-base: https://github.com/petejohanson
+    - name: azoteq-driver
+      url-base: https://github.com/AYM1607
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
-    - name: zmk-pointing-devices
-      remote: petejohanson
+    - name: zmk-driver-azoteq-iqs5xx
+      remote: azoteq-driver
       revision: main
   self:
     path: config
