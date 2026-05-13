@@ -1,0 +1,76 @@
+/*
+ * nice_nano_v2.overlay
+ *
+ * Overlay único para os dois lados do Sofle V2.
+ * O lado direito tem o TPS43, o esquerdo tem a OLED.
+ */
+
+#include <dt-bindings/zmk/input_transform.h>
+
+/* ── Pinctrl I2C (igual nos dois lados — mesmos pinos SDA/SCL) ─────────── */
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+        };
+    };
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+/* ── I2C habilitado nos dois lados ─────────────────────────────────────── */
+&i2c0 {
+    status = "okay";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <I2C_BITRATE_FAST>;
+
+#ifdef CONFIG_ZMK_KEYBOARD_NAME_sofle_right
+    /* ── LADO DIREITO: TPS43 trackpad ───────────────────────────────── */
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+        /*
+         * RDY → P1.07 (pino do meio do nice!nano, lado esquerdo de cima)
+         */
+        rdy-gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+        azoteq,tap-enable;
+        azoteq,scroll-enable;
+        azoteq,sensitivity = <120>;
+    };
+#else
+    /* ── LADO ESQUERDO: OLED ────────────────────────────────────────── */
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
+        reg = <0x3c>;
+        width = <128>;
+        height = <32>;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <31>;
+        segment-remap;
+        com-invdir;
+        com-sequential;
+        prechargep = <0x22>;
+    };
+#endif
+};
+
+#ifdef CONFIG_ZMK_KEYBOARD_NAME_sofle_right
+/* ── Input listener para o TPS43 (só lado direito) ─────────────────────── */
+/ {
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
+#endif
