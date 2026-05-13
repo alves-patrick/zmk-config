@@ -1,13 +1,16 @@
 &i2c0 {
     status = "okay";
-    clock-frequency = <400000>; // Força a velocidade do barramento
-
+    compatible = "nordic,nrf-twim";
+    /* Endereço padrão Azoteq é 0x44, se não funcionar tente 0x2a */
     trackpad: tps43@44 {
         compatible = "azoteq,tps43";
         reg = <0x44>;
-        /* Pino 107 = Porto 1, Pino 7 */
+        /* Pino 107 é o P1.07 */
         irq-gpios = <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         resolution = <800>;
-        status = "okay";
     };
+};
+
+&oled {
+    status = "disabled";
 };
