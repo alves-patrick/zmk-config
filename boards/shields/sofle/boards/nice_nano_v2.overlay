@@ -1,0 +1,24 @@
+#include <dt-bindings/zmk/input_transform.h>
+
+&oled { status = "disabled"; };
+
+/ { chosen { /delete-property/ zephyr,display; }; };
+
+&i2c0 {
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+        rdy-gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+        azoteq,tap-enable;
+        azoteq,scroll-enable;
+        azoteq,sensitivity = <120>;
+    };
+};
+
+/ {
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
