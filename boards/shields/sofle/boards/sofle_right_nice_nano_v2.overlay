@@ -41,11 +41,11 @@
     pinctrl-names = "default", "sleep";
     clock-frequency = <I2C_BITRATE_FAST>; /* 400 kHz */
 
-    /* Azoteq TPS43 — endereço padrão 0x74 */
-    tps43: iqs5xx@74 {
+    /* Azoteq TPS43 — endereço padrão 0x44 */
+    tps43: iqs5xx@44 {
         status = "okay";
         compatible = "azoteq,iqs5xx";
-        reg = <0x74>;
+        reg = <0x44>;
 
         /*
          * RDY → P1.07 (&gpio1 7)
