@@ -2,14 +2,20 @@
 
 &oled { status = "disabled"; };
 
-/ { chosen { /delete-property/ zephyr,display; }; };
+/ { 
+    chosen { 
+        /delete-property/ zephyr,display; 
+    }; 
+};
 
 &i2c0 {
+    status = "okay"; // Garante que o barramento I2C está ativo
     tps43: iqs5xx@74 {
-        status = "okay";
         compatible = "azoteq,iqs5xx";
         reg = <0x74>;
-        rdy-gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+        /* Usando GPIO direto para o pad P1.07 com Pull-Down */
+        rdy-gpios = <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        status = "okay";
         azoteq,tap-enable;
         azoteq,scroll-enable;
         azoteq,sensitivity = <120>;
