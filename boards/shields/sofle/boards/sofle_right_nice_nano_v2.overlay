@@ -1,0 +1,90 @@
+/*
+ * sofle_right.overlay — Lado DIREITO
+ *
+ * TPS43 ligado nos pinos de I2C que seriam da OLED (SDA/SCL).
+ * O lado direito NÃO tem OLED, então o barramento fica livre pro trackpad.
+ *
+ * Conexões físicas no nice!nano (lado direito):
+ *   VCC  → 3.3V
+ *   GND  → GND
+ *   SDA  → pino D2  (P0.17)
+ *   SCL  → pino D3  (P0.20)
+ *   RDY  → P1.07    (pino no meio do nice!nano, lado esquerdo de cima)
+ *
+ * Não precisa de RESET — o driver funciona sem ele.
+ */
+
+#include <dt-bindings/zmk/input_transform.h>
+
+/* ── Pinctrl: define o barramento I2C nos pinos D2/D3 ─────────────────── */
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+        };
+    };
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+/* ── Barramento I2C ────────────────────────────────────────────────────── */
+&i2c0 {
+    status = "okay";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    clock-frequency = <I2C_BITRATE_FAST>; /* 400 kHz */
+
+    /* Azoteq TPS43 — endereço padrão 0x74 */
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+
+        /*
+         * RDY → P1.07 (&gpio1 7)
+         * Esse é o pino no meio do nice!nano (lado esquerdo de cima),
+         * que você mencionou como "pino 107".
+         * No nRF52840: P1.07 = porta 1, pino 7.
+         */
+        rdy-gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+
+        /*
+         * Se quiser ligar o RESET também, descomente a linha abaixo
+         * e escolha outro pino livre (ex: P1.06 = &gpio1 6):
+         */
+        /* reset-gpios = <&gpio1 6 GPIO_ACTIVE_LOW>; */
+
+        /* Sensibilidade e comportamento do trackpad */
+        azoteq,tap-enable;          /* habilita clique por toque */
+        azoteq,scroll-enable;       /* habilita scroll de 2 dedos */
+
+        /*
+         * Resolução de movimento (ajuste conforme preferência):
+         * sensitivity: 0–255 (maior = mais sensível)
+         */
+        azoteq,sensitivity = <120>;
+    };
+};
+
+/* ── Input listener: conecta o TPS43 ao sistema de input do ZMK ───────── */
+/ {
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+
+        /*
+         * Por padrão o listener passa movimento X/Y como mouse pointer.
+         * O scroll de 2 dedos é tratado internamente pelo driver.
+         *
+         * Se quiser inverter algum eixo, descomente:
+         */
+        /* input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>; */
+    };
+};
