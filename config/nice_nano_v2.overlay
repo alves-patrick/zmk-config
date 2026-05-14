@@ -2,8 +2,6 @@
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        xy-swap;
-        x-invert;
     };
 };
 
