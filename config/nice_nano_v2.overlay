@@ -16,10 +16,10 @@
         reg = <0x74>;
         status = "okay";
 
-        /* Nome corrigido para evitar o erro de compilação 'gen_defines.py' */
-        interrupt-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        /* OLHA AQUI: É rdy-gpios (SEM O "d" NO COMEÇO) */
+        rdy-gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
 
-        /* Configurações de gestos baseadas no driver */
+        /* Configurações de gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
