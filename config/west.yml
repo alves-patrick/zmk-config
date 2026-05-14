@@ -9,7 +9,7 @@ manifest:
   projects:
     - name: zmk
       remote: nickcoutsos
-      revision: v0.3-display-relay # Branch estável com suporte a espelhamento de tela
+      revision: main-display-relay
       import: app/west.yml
     - name: zmk-driver-azoteq-iqs5xx
       remote: azoteq-driver
