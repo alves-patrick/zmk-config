@@ -1,4 +1,4 @@
-/ {
+ / {
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
@@ -30,7 +30,6 @@
     pinctrl-names = "default", "sleep";
     clock-frequency = <100000>;
 
-    /* SEU TRACKPAD AZOTEQ (TOTALMENTE IGUAL, SEM NENHUMA ALTERAÇÃO) */
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
         reg = <0x74>;
@@ -44,14 +43,5 @@
         scroll;
         press-and-hold;
         press-and-hold-time = <250>;
-    };
-
-    /* PARTE DO DISPLAY ADICIONADA AQUI (Ajustada para o tamanho físico da 0.69") */
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3c>;
-        label = "DISPLAY";
-        width = <96>;   /* Reduz a largura para a tela de 0.69" */
-        height = <16>;  /* Reduz a altura para 16 pixels da tela de 0.69" */
     };
 };
