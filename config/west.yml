@@ -2,18 +2,27 @@ manifest:
   defaults:
     revision: v0.3
   remotes:
-    - name: nickcoutsos
+    - name: zmkfirmware
       url-base: github.com
     - name: azoteq-driver
       url-base: https://github.com/AYM1607
+    - name: badjeff
+      url-base: https://github.com/badjeff
   projects:
     - name: zmk
-      remote: nickcoutsos
-      revision: main-display-relay
+      remote: zmkfirmware
       import: app/west.yml
+
+    # 1. DOWNLOAD DO DRIVER DO SEU TRACKPAD AZOTEQ
     - name: zmk-driver-azoteq-iqs5xx
       remote: azoteq-driver
       revision: main
       path: drivers/input/azoteq
+
+    # 2. DOWNLOAD DO MÓDULO DE TRANSMISSÃO DA TELA OLED
+    - name: zmk-split-peripheral-output-relay
+      remote: badjeff
+      revision: main
+
   self:
     path: config
