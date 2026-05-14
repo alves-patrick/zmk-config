@@ -2,6 +2,26 @@
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
+        xy-swap;
+        x-invert;
+    };
+};
+
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            bias-pull-up; /* Ativa pull-up interno obrigatório para o nRF52840 */
+        };
+    };
+
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                    <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
     };
 };
 
@@ -10,14 +30,18 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
+    clock-frequency = <100000>; /* Força clock padrão estável para pull-ups internos */
 
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
-        reg = <0x74>;
+        reg = <0x74>; /* Mantenha 0x74 ou teste 0x44 se o ZMK der erro de I2C */
         status = "okay";
 
-        /* OLHA AQUI: É rdy-gpios (SEM O "d" NO COMEÇO) */
-        rdy-gpios = <&gpio0 22 GPIO_ACTIVE_HIGH>;
+        rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+
+        /* Resoluções físicas do TPS43 para cálculo do cursor */
+        max-x = <3200>;
+        max-y = <2000>;
 
         /* Configurações de gestos */
         one-finger-tap;
