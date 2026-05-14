@@ -7,21 +7,24 @@
 
 &i2c0 {
     status = "okay";
+    /* Certifique-se que o pinctrl aponta para 0.17 (SDA) e 0.20 (SCL) no seu arquivo principal */
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
 
+    /* Endereço pode ser 0x74 ou 0x44. Se travar ao tocar, mude para 0x44 */
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
         reg = <0x74>;
         status = "okay";
 
-        /* Como você soldou o RST no 3V3, não defina reset-gpios aqui */
+        /* Como o RST está no VCC, não definimos reset-gpios */
         
-        /* Seu pino RDY soldado no pad interno 1.02 */
-        rdy-gpios = <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        /* RDY ligado no pino 0.22 (P0.22) conforme seu mapeamento */
+        /* Usamos &gpio0 porque pinos de 0 a 31 pertencem ao grupo 0 */
+        drdy-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
-        /* Opções de configuração conforme o README do repo */
+        /* Configurações de gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
