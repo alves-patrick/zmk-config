@@ -3,35 +3,16 @@ manifest:
     revision: v0.3
   remotes:
     - name: zmkfirmware
-      url-base: github.com
+      url-base: https://github.com/zmkfirmware
     - name: azoteq-driver
       url-base: https://github.com/AYM1607
-    - name: badjeff
-      url-base: https://github.com/badjeff
-    # NOVO: Remote para a tela customizada
-    - name: mctechnology17
-      url-base: https://github.com/mctechnology17
-
   projects:
     - name: zmk
       remote: zmkfirmware
       import: app/west.yml
-
-    # 1. DOWNLOAD DO DRIVER DO SEU TRACKPAD AZOTEQ
     - name: zmk-driver-azoteq-iqs5xx
       remote: azoteq-driver
       revision: main
       path: drivers/input/azoteq
-
-    # 2. DOWNLOAD DO MÓDULO DE TRANSMISSÃO DA TELA OLED
-    - name: zmk-split-peripheral-output-relay
-      remote: badjeff
-      revision: main
-
-    # 3. NOVO: DOWNLOAD DA TELA CUSTOMIZADA / VERTICAL
-    - name: zmk-nice-oled
-      remote: mctechnology17
-      revision: main
-
   self:
     path: config
