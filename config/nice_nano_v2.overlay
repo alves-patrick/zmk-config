@@ -19,7 +19,7 @@
         /* Como você soldou o RST no 3V3, não defina reset-gpios aqui */
         
         /* Seu pino RDY soldado no pad interno 1.02 */
-        rdy-gpios = <&gpio1 2 GPIO_ACTIVE_HIGH>;
+        rdy-gpios = <&gpio1 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 
         /* Opções de configuração conforme o README do repo */
         one-finger-tap;
