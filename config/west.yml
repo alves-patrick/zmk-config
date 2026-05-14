@@ -8,6 +8,10 @@ manifest:
       url-base: https://github.com/AYM1607
     - name: badjeff
       url-base: https://github.com/badjeff
+    # NOVO: Remote para a tela customizada
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
+
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -22,6 +26,11 @@ manifest:
     # 2. DOWNLOAD DO MÓDULO DE TRANSMISSÃO DA TELA OLED
     - name: zmk-split-peripheral-output-relay
       remote: badjeff
+      revision: main
+
+    # 3. NOVO: DOWNLOAD DA TELA CUSTOMIZADA / VERTICAL
+    - name: zmk-nice-oled
+      remote: mctechnology17
       revision: main
 
   self:
