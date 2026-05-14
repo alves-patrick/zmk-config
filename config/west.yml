@@ -2,13 +2,14 @@ manifest:
   defaults:
     revision: v0.3
   remotes:
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
+    - name: nickcoutsos
+      url-base: github.com
     - name: azoteq-driver
       url-base: https://github.com/AYM1607
   projects:
     - name: zmk
-      remote: zmkfirmware
+      remote: nickcoutsos
+      revision: v0.3-display-relay # Branch estável com suporte a espelhamento de tela
       import: app/west.yml
     - name: zmk-driver-azoteq-iqs5xx
       remote: azoteq-driver
@@ -16,4 +17,3 @@ manifest:
       path: drivers/input/azoteq
   self:
     path: config
-
