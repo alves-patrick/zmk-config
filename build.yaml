@@ -1,10 +1,8 @@
 ---
 include:
   - board: nice_nano_v2
-    shield: sofle_left
+    shield: sofle_left nice_oled   # Combinei aqui, o West vai tratar como um único firmware
   - board: nice_nano_v2
-    shield: sofle_right
+    shield: sofle_right            # O lado direito continua puro (sem tela)
   - board: nice_nano_v2
     shield: settings_reset
-  - board: nice_nano_v2
-    shield: sofle_left nice_oled
