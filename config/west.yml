@@ -6,6 +6,8 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: azoteq-driver
       url-base: https://github.com/AYM1607
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -14,5 +16,8 @@ manifest:
       remote: azoteq-driver
       revision: main
       path: drivers/input/azoteq
+    - name: zmk-nice-oled
+      remote: mctechnology17
+      revision: main
   self:
     path: config
