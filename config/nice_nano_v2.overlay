@@ -1,10 +1,10 @@
-#include <dt-bindings/zmk/input_transform.h>
-
 / {
-    /* ACELERADOR SIMPLIFICADO */
+    /* 1. ACELERADOR: Como seu driver é "puro", vamos usar o scaler do ZMK
+       mas com a propriedade 'type' que o seu erro reclamou que faltava. */
     tps43_scaling: tps43_scaling {
         compatible = "zmk,input-processor-scaler";
         #input-processor-cells = <1>;
+        type = <0x00>; /* 0x00 é o código para 'relativo' que faltava no log */
         multiplier = <3>;
         denominator = <1>;
     };
@@ -47,7 +47,19 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* APENAS O BÁSICO QUE O SEU DRIVER ACEITA */
+        /* --- CONFIGURAÇÕES QUE EU VI NO SEU CÓDIGO --- */
+        
+        /* Se o X continuar invertido, mude para true */
+        flip-x; 
+        /* flip-y;  <- Se o vertical inverter, descomente esta linha */
+        
+        /* Sensibilidade (Sensitivity) */
+        /* bottom-beta: Menor = mais sensível. Seu driver aceita de 0 a 255. */
+        bottom-beta = <3>; 
+        /* stationary-threshold: Filtra tremedeira. */
+        stationary-threshold = <2>;
+
+        /* Gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
