@@ -1,10 +1,10 @@
 / {
-    /* ACELERADOR: Agora com 'type' e 'codes' que o seu compilador exige */
+    /* ACELERADOR: Ajustado para o erro específico: #input-processor-cells = 2 */
     tps43_scaling: tps43_scaling {
         compatible = "zmk,input-processor-scaler";
-        #input-processor-cells = <1>;
+        /* O log de erro exigiu o valor (2) aqui */
+        #input-processor-cells = <2>;
         type = <0x00>;
-        /* 0x00 e 0x01 são os códigos para eixos X e Y relativos */
         codes = <0x00 0x01>; 
         multiplier = <3>;
         denominator = <1>;
@@ -13,7 +13,8 @@
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        input-processors = <&tps43_scaling 0>;
+        /* Como agora são 2 células, passamos dois argumentos (0 0) */
+        input-processors = <&tps43_scaling 0 0>;
     };
 };
 
@@ -48,14 +49,11 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* Configurações nativas do seu driver */
+        /* Configurações nativas do seu driver que vimos no código */
         flip-x; 
-        
-        /* Sensibilidade agressiva para vencer a película */
         bottom-beta = <3>; 
         stationary-threshold = <2>;
 
-        /* Gestos padrão */
         one-finger-tap;
         two-finger-tap;
         scroll;
