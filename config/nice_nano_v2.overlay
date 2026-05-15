@@ -1,20 +1,8 @@
 / {
-    /* ACELERADOR: Ajustado para o erro específico: #input-processor-cells = 2 */
-    tps43_scaling: tps43_scaling {
-        compatible = "zmk,input-processor-scaler";
-        /* O log de erro exigiu o valor (2) aqui */
-        #input-processor-cells = <2>;
-        type = <0x00>;
-        codes = <0x00 0x01>; 
-        multiplier = <3>;
-        denominator = <1>;
-    };
-
+    /* 1. OUVINTE SIMPLIFICADO: Sem processadores externos que quebram o build */
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        /* Como agora são 2 células, passamos dois argumentos (0 0) */
-        input-processors = <&tps43_scaling 0 0>;
     };
 };
 
@@ -39,8 +27,7 @@
 &i2c0 {
     status = "okay";
     pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
+    pinctrl-names = "default";
     clock-frequency = <100000>;
 
     tps43: iqs5xx@74 {
@@ -49,11 +36,19 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* Configurações nativas do seu driver que vimos no código */
+        /* --- CONFIGURAÇÕES NATIVAS DO SEU DRIVER --- */
+        
+        /* Inversão do Eixo X direto no chip */
         flip-x; 
+        
+        /* Sensibilidade (Sensitivity) */
+        /* bottom-beta: Valores baixos (1-4) aumentam a sensibilidade */
         bottom-beta = <3>; 
+        
+        /* Stationary Threshold: Filtra tremedeira do cursor */
         stationary-threshold = <2>;
 
+        /* Gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
