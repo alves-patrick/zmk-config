@@ -1,7 +1,7 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 / {
-    /* 1. ACELERADOR: Multiplica o movimento por 3 para ser mais ágil */
+    /* ACELERADOR SIMPLIFICADO */
     tps43_scaling: tps43_scaling {
         compatible = "zmk,input-processor-scaler";
         #input-processor-cells = <1>;
@@ -12,7 +12,6 @@
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        /* Aplica o multiplicador de velocidade */
         input-processors = <&tps43_scaling 0>;
     };
 };
@@ -48,7 +47,7 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* Mantendo apenas os comandos que seu driver reconhece */
+        /* APENAS O BÁSICO QUE O SEU DRIVER ACEITA */
         one-finger-tap;
         two-finger-tap;
         scroll;
