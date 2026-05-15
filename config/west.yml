@@ -19,6 +19,6 @@ manifest:
     - name: zmk-nice-oled
       remote: mctechnology17
       revision: main
-      path: modules/nice-oled
+      path: zmk-nice-oled
   self:
     path: config
