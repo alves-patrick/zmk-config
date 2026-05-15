@@ -1,10 +1,11 @@
 / {
-    /* 1. ACELERADOR: Como seu driver é "puro", vamos usar o scaler do ZMK
-       mas com a propriedade 'type' que o seu erro reclamou que faltava. */
+    /* ACELERADOR: Agora com 'type' e 'codes' que o seu compilador exige */
     tps43_scaling: tps43_scaling {
         compatible = "zmk,input-processor-scaler";
         #input-processor-cells = <1>;
-        type = <0x00>; /* 0x00 é o código para 'relativo' que faltava no log */
+        type = <0x00>;
+        /* 0x00 e 0x01 são os códigos para eixos X e Y relativos */
+        codes = <0x00 0x01>; 
         multiplier = <3>;
         denominator = <1>;
     };
@@ -47,19 +48,14 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* --- CONFIGURAÇÕES QUE EU VI NO SEU CÓDIGO --- */
-        
-        /* Se o X continuar invertido, mude para true */
+        /* Configurações nativas do seu driver */
         flip-x; 
-        /* flip-y;  <- Se o vertical inverter, descomente esta linha */
         
-        /* Sensibilidade (Sensitivity) */
-        /* bottom-beta: Menor = mais sensível. Seu driver aceita de 0 a 255. */
+        /* Sensibilidade agressiva para vencer a película */
         bottom-beta = <3>; 
-        /* stationary-threshold: Filtra tremedeira. */
         stationary-threshold = <2>;
 
-        /* Gestos */
+        /* Gestos padrão */
         one-finger-tap;
         two-finger-tap;
         scroll;
