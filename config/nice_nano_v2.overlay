@@ -6,14 +6,14 @@
         type = <INPUT_TRANSFORM_X_INVERT>;
         x-codes = <0x00>; 
         y-codes = <0x01>;
-        /* ESSA LINHA RESOLVE O ERRO ATUAL */
-        #input-processor-cells = <0>;
+        /* CORREÇÃO: O compilador exige o valor 1 para esta versão */
+        #input-processor-cells = <1>;
     };
 
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        input-processors = <&tps43_transform>;
+        input-processors = <&tps43_transform 0>;
     };
 };
 
