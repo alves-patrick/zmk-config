@@ -48,19 +48,7 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* --- MELHORIAS DE PRECISÃO E SENSIBILIDADE --- */
-        
-        /* Sensibilidade do Toque: Menor é mais sensível. 
-           Como você está com película, 15 é um valor excelente. */
-        touch-threshold = <15>;
-
-        /* Evita falhas: Distância mínima para começar o movimento */
-        snap-threshold = <1>;
-        
-        /* Filtro de ruído: Ajuda a não "tremer" o cursor */
-        noise-threshold = <2>;
-
-        /* Configurações de gestos */
+        /* Mantendo apenas os comandos que seu driver reconhece */
         one-finger-tap;
         two-finger-tap;
         scroll;
