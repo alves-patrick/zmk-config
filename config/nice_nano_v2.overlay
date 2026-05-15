@@ -1,7 +1,17 @@
- / {
+#include <dt-bindings/zmk/input_transform.h>
+
+/ {
+    /* 1. CORREÇÃO DE EIXO: Inverte o X para a esquerda/direita ficar natural */
+    tps43_transform: tps43_transform {
+        compatible = "zmk,input-processor-transform";
+        type = <INPUT_TRANSFORM_X_INVERT>;
+    };
+
+    /* 2. OUVINTE: Conecta o sensor ao sistema de mouse com a correção aplicada */
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
+        input-processors = <&tps43_transform>;
     };
 };
 
@@ -35,9 +45,10 @@
         reg = <0x74>;
         status = "okay";
 
+        /* Pino de interrupção (Ready) no P0.22 */
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* Configurações de gestos suportadas pelo driver */
+        /* Configurações de gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
