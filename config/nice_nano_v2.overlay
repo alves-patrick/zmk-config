@@ -1,18 +1,19 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 / {
-    tps43_transform: tps43_transform {
+tps43_transform: tps43_transform {
         compatible = "zmk,input-processor-transform";
-        type = <INPUT_TRANSFORM_X_INVERT>;
+        /* Tentando a inversão de ambos para garantir que o driver processe */
+        type = <(INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
         x-codes = <0x00>; 
         y-codes = <0x01>;
-        /* CORREÇÃO: O compilador exige o valor 1 para esta versão */
         #input-processor-cells = <1>;
     };
 
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
+        /* Mantendo o '0' como argumento que o seu build exigiu */
         input-processors = <&tps43_transform 0>;
     };
 };
