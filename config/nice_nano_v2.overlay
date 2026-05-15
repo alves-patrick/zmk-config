@@ -27,9 +27,9 @@
     status = "okay";
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
-    /* CORREÇÃO AQUI: Se tem pinctrl-0 e 1, PRECISA de dois nomes */
     pinctrl-names = "default", "sleep";
-    clock-frequency = <100000>;
+    /* Aumentado para 400kHz para leitura mais rápida dos dados do sensor */
+    clock-frequency = <400000>;
 
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
@@ -37,15 +37,17 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* Configurações nativas do seu driver */
-        flip-x; 
-        bottom-beta = <3>; 
-        stationary-threshold = <2>;
+        /* --- MELHORIAS DE FLUIDEZ --- */
+        flip_x; 
+        /* Beta em 4 para manter a conexão do toque mais estável */
+        bottom_beta = <4>; 
+        /* Threshold em 1 para o mouse 'acordar' no menor movimento do dedo */
+        stationary_threshold = <1>;
 
-        one-finger-tap;
-        two-finger-tap;
+        one_finger_tap;
+        two_finger_tap;
         scroll;
-        press-and-hold;
-        press-and-hold-time = <250>;
+        press_and_hold;
+        press_and_hold-time = <250>;
     };
 };
