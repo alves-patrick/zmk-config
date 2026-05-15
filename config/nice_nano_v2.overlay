@@ -1,11 +1,11 @@
 #include <dt-bindings/zmk/input_transform.h>
+#include <dt-bindings/zmk/input.h>
 
 / {
-    /* CORREÇÃO: Adicionamos x-codes e y-codes que agora são obrigatórios */
+    /* CORREÇÃO: Com os includes certos, o compilador vai aceitar os códigos abaixo */
     tps43_transform: tps43_transform {
         compatible = "zmk,input-processor-transform";
         type = <INPUT_TRANSFORM_X_INVERT>;
-        /* Mantém o mapeamento padrão dos eixos, apenas aplicando a inversão definida acima */
         x-codes = <INPUT_REL_X>;
         y-codes = <INPUT_REL_Y>;
     };
