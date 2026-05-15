@@ -28,7 +28,6 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
-    /* Aumentado para 400kHz para leitura mais rápida dos dados do sensor */
     clock-frequency = <400000>;
 
     tps43: iqs5xx@74 {
@@ -37,17 +36,16 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* --- MELHORIAS DE FLUIDEZ --- */
-        flip_x; 
-        /* Beta em 4 para manter a conexão do toque mais estável */
-        bottom_beta = <4>; 
-        /* Threshold em 1 para o mouse 'acordar' no menor movimento do dedo */
-        stationary_threshold = <1>;
+        /* CORREÇÃO: No .yaml do driver as propriedades usam hífen (-) */
+        flip-x; 
+        bottom-beta = <4>; 
+        stationary-threshold = <1>;
 
-        one_finger_tap;
-        two_finger_tap;
+        one-finger-tap;
+        two-finger-tap;
         scroll;
-        press_and_hold;
-        press_and_hold-time = <250>;
+        press-and-hold;
+        /* Estava 'hold-time', o correto conforme o binding é com hífen */
+        press-and-hold-time = <250>; 
     };
 };
