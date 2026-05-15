@@ -1,5 +1,4 @@
 / {
-    /* 1. OUVINTE SIMPLIFICADO: Sem processadores externos que quebram o build */
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
@@ -27,7 +26,9 @@
 &i2c0 {
     status = "okay";
     pinctrl-0 = <&i2c0_default>;
-    pinctrl-names = "default";
+    pinctrl-1 = <&i2c0_sleep>;
+    /* CORREÇÃO AQUI: Se tem pinctrl-0 e 1, PRECISA de dois nomes */
+    pinctrl-names = "default", "sleep";
     clock-frequency = <100000>;
 
     tps43: iqs5xx@74 {
@@ -36,19 +37,11 @@
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* --- CONFIGURAÇÕES NATIVAS DO SEU DRIVER --- */
-        
-        /* Inversão do Eixo X direto no chip */
+        /* Configurações nativas do seu driver */
         flip-x; 
-        
-        /* Sensibilidade (Sensitivity) */
-        /* bottom-beta: Valores baixos (1-4) aumentam a sensibilidade */
         bottom-beta = <3>; 
-        
-        /* Stationary Threshold: Filtra tremedeira do cursor */
         stationary-threshold = <2>;
 
-        /* Gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
