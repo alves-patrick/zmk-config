@@ -1,13 +1,22 @@
 #include <dt-bindings/zmk/input_transform.h>
 
 / {
+    /* 1. ACELERADOR: Multiplica o movimento por 3 para ser mais ágil */
+    tps43_scaling: tps43_scaling {
+        compatible = "zmk,input-processor-scaler";
+        #input-processor-cells = <1>;
+        multiplier = <3>;
+        denominator = <1>;
+    };
 
-tps43_input: tps43_input {
+    tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43>;
-        /* Sem transformadores, já que agora o hardware está lendo certo */
+        /* Aplica o multiplicador de velocidade */
+        input-processors = <&tps43_scaling 0>;
     };
 };
+
 &pinctrl {
     i2c0_default: i2c0_default {
         group1 {
@@ -39,6 +48,19 @@ tps43_input: tps43_input {
         status = "okay";
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
+        /* --- MELHORIAS DE PRECISÃO E SENSIBILIDADE --- */
+        
+        /* Sensibilidade do Toque: Menor é mais sensível. 
+           Como você está com película, 15 é um valor excelente. */
+        touch-threshold = <15>;
+
+        /* Evita falhas: Distância mínima para começar o movimento */
+        snap-threshold = <1>;
+        
+        /* Filtro de ruído: Ajuda a não "tremer" o cursor */
+        noise-threshold = <2>;
+
+        /* Configurações de gestos */
         one-finger-tap;
         two-finger-tap;
         scroll;
