@@ -1,13 +1,12 @@
 #include <dt-bindings/zmk/input_transform.h>
-#include <dt-bindings/zmk/input.h>
 
 / {
-    /* CORREÇÃO: Com os includes certos, o compilador vai aceitar os códigos abaixo */
+    /* CORREÇÃO: Usando números diretos para não depender do input.h faltando */
     tps43_transform: tps43_transform {
         compatible = "zmk,input-processor-transform";
         type = <INPUT_TRANSFORM_X_INVERT>;
-        x-codes = <INPUT_REL_X>;
-        y-codes = <INPUT_REL_Y>;
+        x-codes = <0x00>; /* Corresponde ao INPUT_REL_X */
+        y-codes = <0x01>; /* Corresponde ao INPUT_REL_Y */
     };
 
     tps43_input: tps43_input {
