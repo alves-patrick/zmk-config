@@ -1,3 +1,6 @@
+/* Força o compilador do Zephyr a carregar a biblioteca de drivers matemáticos de input AQUI */
+#include <dt-bindings/zmk/input_transform.h>
+
 / {
     /* O listener pega os dados do túnel e aplica o filtro de escala e suavização estilo Apple */
     tps43_input: tps43_input {
