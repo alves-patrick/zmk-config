@@ -52,9 +52,13 @@
 
         flip-x; 
         
-        /* Ajustes baseados na struct do driver enviado: */
-        bottom-beta = <2>;             /* Resposta mais direta nas curvas de leitura */
-        stationary-threshold = <2>;    /* Filtra as micro-oscilações do dedo lento */
+        /* --- CALIBRAÇÃO DE ALTA PERFORMANCE (ESTILO APPLE) --- */
+        /* Sobe o beta para aumentar o amortecimento do filtro IIR (mata o tremido) */
+        bottom-beta = <6>;             
+        
+        /* Define que o dedo precisa andar pelo menos 3 pixels para começar o tracking */
+        /* Isso estabiliza o ponteiro e evita os micro-pulos ao tentar clicar */
+        stationary-threshold = <3>;    
 
         one-finger-tap;
         two-finger-tap;
