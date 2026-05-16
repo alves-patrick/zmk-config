@@ -1,9 +1,14 @@
+/* Certifique-se de que essa linha abaixo está no TOPO do seu arquivo .overlay ou .keymap */
+#include <dt-bindings/zmk/input_transform.h>
+
 / {
-    /* O listener agora aponta para o túnel do rádio (tps43_split) */
-    /* Isso permite que o lado esquerdo controle o mouse mesmo sem o hardware nele */
+    /* O listener agora processa a escala e suavização antes de enviar pro SO */
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43_split>; 
+        
+        /* MULTIPLICADOR DINÂMICO: Aumenta o alcance do ponteiro e suaviza o jitter */
+        input-processors = <&zip_xy_scaler 2 1>;
     };
 
     /* Define o túnel de comunicação entre os lados */
@@ -52,8 +57,11 @@
         rdy-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
         flip-x; 
-        bottom-beta = <4>; 
-        stationary-threshold = <1>;
+        
+        /* --- CORREÇÕES CIRÚRGICAS PARA FICAR LISO --- */
+        bottom-beta = <2>;             /* Diminui o delay de processamento interno do chip */
+        stationary-threshold = <2>;    /* Ignora tremores leves quando o dedo está parado ou desacelerando */
+        filter-settings = <0x0B>;      /* Força o hardware do Azoteq a rodar o filtro dinâmico anti-ruído */
 
         one-finger-tap;
         two-finger-tap;
