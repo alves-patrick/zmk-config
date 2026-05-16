@@ -1,5 +1,5 @@
 / {
-    /* O listener aponta para o túnel do rádio (tps43_split) */
+    /* O listener original aponta para o túnel do rádio (tps43_split) */
     tps43_input: tps43_input {
         compatible = "zmk,input-listener";
         device = <&tps43_split>; 
@@ -52,9 +52,9 @@
 
         flip-x; 
         
-        /* VALORES CORRIGIDOS: Máxima resposta física aceita pelo driver */
-        bottom-beta = <2>;             /* Tira o delay de interpolação do chip */
-        stationary-threshold = <2>;    /* Engole tremores leves do dedo */
+        /* Ajustes baseados na struct do driver enviado: */
+        bottom-beta = <2>;             /* Resposta mais direta nas curvas de leitura */
+        stationary-threshold = <2>;    /* Filtra as micro-oscilações do dedo lento */
 
         one-finger-tap;
         two-finger-tap;
