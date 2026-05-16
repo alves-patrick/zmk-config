@@ -52,14 +52,11 @@
 
         flip-x; 
         
-        /* --- CALIBRAÇÃO DE ALTA PERFORMANCE (ESTILO APPLE) --- */
-        /* Sobe o beta para aumentar o amortecimento do filtro IIR (mata o tremido) */
-        bottom-beta = <6>;             
-        
-        /* Define que o dedo precisa andar pelo menos 3 pixels para começar o tracking */
-        /* Isso estabiliza o ponteiro e evita os micro-pulos ao tentar clicar */
-        stationary-threshold = <3>;    
+        /* --- CALIBRAÇÃO ANTI-TREMIDO (ESTILO APPLE) --- */
+        bottom-beta = <7>;             /* Filtro IIR pesado para suavizar o rastro do ponteiro */
+        stationary-threshold = <3>;    /* Estabiliza o clique e ignora ruído do dedo parado */
 
+        /* GESTOS NATIVOS SUPORTADOS */
         one-finger-tap;
         two-finger-tap;
         scroll;
