@@ -119,3 +119,8 @@
         };
     };
 };
+
+/* COLA ISSO AQUI DEPOIS DE FECHAR TUDO NO FINAL DO ARQUIVO */
+&tps43_input {
+    input-processors = <&zip_xy_scaler 2 1>;
+};
