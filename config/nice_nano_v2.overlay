@@ -42,7 +42,7 @@
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
-    clock-frequency = <400000>;
+    clock-frequency = <100000>;
 
     tps43: iqs5xx@74 {
         compatible = "azoteq,iqs5xx";
