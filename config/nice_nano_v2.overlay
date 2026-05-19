@@ -53,14 +53,12 @@
         flip-x; 
         
         /* --- CALIBRAÇÃO ANTI-TREMIDO (ESTILO APPLE) --- */
-        bottom-beta = <7>;             /* Filtro IIR pesado para suavizar o rastro do ponteiro */
-        stationary-threshold = <3>;    /* Estabiliza o clique e ignora ruído do dedo parado */
+        bottom-beta = <5>;             /* Filtro IIR pesado para suavizar o rastro do ponteiro */
+        stationary-threshold = <2>;    /* Estabiliza o clique e ignora ruído do dedo parado */
 
         /* GESTOS NATIVOS SUPORTADOS */
         one-finger-tap;
         two-finger-tap;
         scroll;
-        press-and-hold;
-        press-and-hold-time = <250>; 
     };
 };
